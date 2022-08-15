@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Loyola';
+    src: url('Loyola.eot');
+    src: local('Loyola'),
+        url('Loyola.eot?#iefix') format('embedded-opentype'),
+        url('Loyola.woff2') format('woff2'),
+        url('Loyola.woff') format('woff'),
+        url('Loyola.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
