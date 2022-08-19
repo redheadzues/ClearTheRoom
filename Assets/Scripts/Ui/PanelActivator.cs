@@ -5,6 +5,15 @@ public class PanelActivator : MonoBehaviour
     [SerializeField] private GameObject _stageCompletePanel;
     [SerializeField] private StageFinisher _stageFinisher;
 
+    private void OnValidate()
+    {
+        if (_stageFinisher == null)
+            throw new System.Exception($"Не назначен StageFinisher на объекте {gameObject}");
+        if(_stageCompletePanel == null)
+            if (_stageFinisher == null)
+                throw new System.Exception($"Не назначена панель завершения стадии на объекте {gameObject}");
+    }
+
     private void OnEnable()
     {
         _stageFinisher.StageFinished += OnStageFinished;

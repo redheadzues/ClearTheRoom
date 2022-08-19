@@ -20,10 +20,24 @@ public class SecondStageItems : Stage
         _itemInRightPosition = GameObject.FindObjectOfType<ItemInRightPosition>();
     }
 
+    private void OnValidate()
+    {
+      if(_rightPlace == null)
+            throw new System.Exception($"Не назначена верная позиция на объекте {gameObject}");
+    }
+
     private void OnMouseDown()
     {
         if(_coroutine == null && enabled == true)
             _coroutine = StartCoroutine(OnMoveToRightPosition());
+    }
+
+    private void TryToPlayCelebration()
+    {
+        _itemInRightPosition.transform.position = transform.position;
+
+        if (_itemInRightPosition.gameObject.TryGetComponent<ParticleSystem>(out ParticleSystem particle))
+            particle.Play();
     }
 
     private IEnumerator OnMoveToRightPosition()
@@ -38,8 +52,7 @@ public class SecondStageItems : Stage
             yield return waitingTime;
         }
 
-        OnItemPlaced();
-        _itemInRightPosition.transform.position = transform.position;
-        _itemInRightPosition.gameObject.GetComponent<ParticleSystem>().Play();
+        TaskComplete();
+        TryToPlayCelebration();
     }
 }

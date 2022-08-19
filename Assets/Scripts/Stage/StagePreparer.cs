@@ -13,11 +13,22 @@ public class StagePreparer : MonoBehaviour
 
     public event UnityAction StageStarted;
     public IReadOnlyList<Stage> CurrentItem => _currentStageItems;
+    public int CurrentStage => _currentStage;
 
-    private void Start()
+    private void OnValidate()
+    {
+        if(_highlightsTime <= 0)   
+            _highlightsTime = 1.5f;
+    }
+
+    private void Awake()
     {
         _stagesItems = GameObject.FindObjectsOfType<Stage>();
         DeactivateScripts();
+    }
+
+    private void Start()
+    {
         _currentStage = 0;
         StartNextStage();
     }
@@ -40,8 +51,7 @@ public class StagePreparer : MonoBehaviour
     private void ActivateScripts()
     {
         for(int i = 0; i < _currentStageItems.Count; i++)
-            _currentStageItems[i].enabled = true;
-         
+            _currentStageItems[i].enabled = true;         
     }
 
     private void FindCurrentStageItems()

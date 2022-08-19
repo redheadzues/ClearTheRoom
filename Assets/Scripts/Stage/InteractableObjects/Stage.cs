@@ -6,12 +6,12 @@ public abstract class Stage : MonoBehaviour
 {
     private Outline _outline;
 
-    public event UnityAction ItemPlaced;
+    public virtual event UnityAction TaskCompleted;
     public abstract int StageNumber { get; protected set; }
 
-    protected void OnItemPlaced()
+    protected void TaskComplete()
     {
-        ItemPlaced?.Invoke();
+        TaskCompleted?.Invoke();
     }
 
     private void OnEnable()

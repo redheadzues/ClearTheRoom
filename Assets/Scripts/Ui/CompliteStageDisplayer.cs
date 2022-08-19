@@ -9,6 +9,18 @@ public class CompliteStageDisplayer : MonoBehaviour
     [SerializeField] private StageFinisher _stageFinisher;
 
     private int _precent = 100;
+    private string _percentString = "%";
+    private int _DontDivisionByZero = 0;
+
+    private void OnValidate()
+    {
+        if(_slider == null)
+            throw new System.Exception($"Не назначен слайдер на объекте {gameObject}");
+        if(_text == null)
+            throw new System.Exception($"Не назначен текст на объекте {gameObject}");
+        if(_stageFinisher == null)
+            throw new System.Exception($"Не назначен StageFinisher на объекте {gameObject}");
+    }
 
     private void OnEnable()
     {
@@ -28,13 +40,13 @@ public class CompliteStageDisplayer : MonoBehaviour
 
     private void FillSlider(int value, int maxValue)
     {
-        if (maxValue != 0)
+        if (maxValue != _DontDivisionByZero)
             _slider.value = (float)value / maxValue;
     }
 
     private void DisplyaPercent(int value, int maxValue)
     {
-        if (maxValue != 0)
-            _text.text = (value * _precent / maxValue).ToString() + "%";
+        if (maxValue != _DontDivisionByZero)
+            _text.text = (value * _precent / maxValue).ToString() + _percentString;
     }
 }

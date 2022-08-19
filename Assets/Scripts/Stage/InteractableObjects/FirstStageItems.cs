@@ -7,18 +7,27 @@ public class FirstStageItems : Stage
     [SerializeField] private Collider _target;
 
     private Rigidbody _rigidbody;
-    private float _moveSpeed = 0.15f;
+    private float _moveSpeed = 0.1f;
+    private float _rotationSpeed = 0.9f;
     private float _delay = 0.03f;
     private bool _isDragable = true;
+    private float _maxLiftUp = 0.3f;
+    private Quaternion _rotationAngle;
     private float _distance;
 
     public override int StageNumber { get; protected set; }
-
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         StageNumber = 1;
+        _rotationAngle = new Quaternion(90, 90, 0, 0);
+    }
+
+    private void OnValidate()
+    {
+        if(_target == null)
+            throw new System.Exception($"Не назначен Target на объекте {gameObject}");
     }
 
     private Vector3 GetMouseWorldPosition()
@@ -37,13 +46,13 @@ public class FirstStageItems : Stage
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector3 rayPoint = ray.GetPoint(_distance);
-            transform.position = new Vector3(rayPoint.x, 0.7f, rayPoint.z);
+            transform.position = new Vector3(rayPoint.x, _maxLiftUp, rayPoint.z);
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
-        if(other == _target)
+        if(collider == _target)
         {
             _isDragable = false;
             _rigidbody.isKinematic = true;
@@ -56,6 +65,11 @@ public class FirstStageItems : Stage
         transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, _moveSpeed);
     }
 
+    private void OnFallRotation()
+    {
+        transform.rotation = Quaternion.Lerp(transform.rotation, _rotationAngle, _rotationSpeed);
+    }
+
     private IEnumerator OnTargetFind()
     {
         var waitingTime = new WaitForSeconds(_delay);
@@ -63,13 +77,13 @@ public class FirstStageItems : Stage
         while (transform.position != _target.transform.position)
         {
             FallInBox();
-            //transform.rotation = Quaternion.Lerp(transform.rotation, _rightPlace.rotation, _rotationSpeed * Time.deltaTime);
-
+            yield return waitingTime;
+            OnFallRotation();
             yield return waitingTime;
         }
 
-        OnItemPlaced();
-        _target.gameObject.GetComponent<BoxAnimator>().OnHit();
+        TaskComplete();
+        _target.gameObject.GetComponent<RequiredFirstStageItem>().OnHit();
         gameObject.SetActive(false);
     }
 }

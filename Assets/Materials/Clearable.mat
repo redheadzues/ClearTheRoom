@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Clearable
-  m_Shader: {fileID: 4800000, guid: b8750092f23cd774dbfa79528d72f43c, type: 3}
+  m_Shader: {fileID: 4800000, guid: b61eecfd87b6ae64da8741d4df3f32d1, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -40,11 +40,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: f14b1b905fb4ad041bc20c57c17b61a6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 23fa7fa07bbd02e4a879e905cc4a10c6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask:
-        m_Texture: {fileID: 2800000, guid: 66ecf5f9d8280f44293539af528678e1, type: 3}
+        m_Texture: {fileID: 2800000, guid: fa4886c4a8f8ef94e85834f3fa1e53ec, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -76,7 +76,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Progress: 0
-    - _Radius: 0.25
+    - _Radius: 0.4
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
