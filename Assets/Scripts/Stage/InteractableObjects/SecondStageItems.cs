@@ -4,11 +4,11 @@ using UnityEngine;
 public class SecondStageItems : Stage
 {
     [SerializeField] private Transform _rightPlace;
+    [SerializeField] private float _moveSpeed = 4;
     
     private ItemInRightPosition _itemInRightPosition;
-    private float _moveSpeed = 20;
-    private float _rotationSpeed = 150;
-    private float _delay = 0.1f;
+    private float _rotationSpeed = 80;
+    private float _delay = 0.05f;
     private Coroutine _coroutine;
     private bool isPositionRight => transform.position == _rightPlace.position && transform.rotation == _rightPlace.rotation;
 

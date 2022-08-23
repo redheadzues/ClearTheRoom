@@ -11,11 +11,6 @@ public class RequiredThirdStageItem : RequiredItemToCompleteStage
         StageNumber = 3;
     }
 
-    private Vector3 GetMouseWorldPosition()
-    {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    }
-
     private void OnMouseDown()
     {
         _distance = Vector3.Distance(transform.position, Camera.main.transform.position);
@@ -36,17 +31,23 @@ public class RequiredThirdStageItem : RequiredItemToCompleteStage
                 if (hit.collider.TryGetComponent(out ThridStageItem clearable))
                 {
                     RotateToNormal(hit.normal);
-                    transform.position = ClampPosition(rayPoint, clearable);
+                    transform.position = ClampPosition(rayPoint, clearable, hit.normal);
                 }
             }
         }    
     }
 
-    private Vector3 ClampPosition(Vector3 position, ThridStageItem clearabele)
+    private Vector3 ClampPosition(Vector3 position, ThridStageItem clearabele, Vector3 normal)
     {
         position.x = Mathf.Clamp(position.x, clearabele.MinBorderX, clearabele.MaxBorderX);
         position.y = Mathf.Clamp(position.y, clearabele.MinBorderY, clearabele.MaxBorderY);
         position.z = Mathf.Clamp(position.z, clearabele.MinBorderZ, clearabele.MaxBorderZ);
+
+
+        if (normal == -Vector3.forward)
+            position.z = clearabele.MinBorderZ;
+        if(normal == Vector3.up)
+            position.y = clearabele.MaxBorderY;
 
         return new Vector3(position.x, position.y, position.z);
     }

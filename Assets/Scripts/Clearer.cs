@@ -27,6 +27,7 @@ public class Clearer : MonoBehaviour
         _renderer.material.SetTexture("_Mask", _maskTexture);
         _renderer.material.mainTexture = _mainTexture;
         _maskTexture.filterMode = FilterMode.Point;
+        _maskTexture.wrapMode = TextureWrapMode.Clamp;
 
         for (int x = 0; x < _maskTexture.width; x++)
         {
@@ -51,7 +52,7 @@ public class Clearer : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (_stageItem.gameObject.activeSelf == true)
         {
             RaycastHit hit;
 

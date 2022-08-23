@@ -9,14 +9,14 @@ public abstract class Stage : MonoBehaviour
     public virtual event UnityAction TaskCompleted;
     public abstract int StageNumber { get; protected set; }
 
-    protected void TaskComplete()
-    {
-        TaskCompleted?.Invoke();
-    }
-
-    private void OnEnable()
+    private void Awake()
     {
         _outline = GetComponent<Outline>();
         _outline.enabled = false;
+    }
+
+    protected void TaskComplete()
+    {
+        TaskCompleted?.Invoke();
     }
 }

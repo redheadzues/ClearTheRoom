@@ -7,9 +7,9 @@ public class FirstStageItems : Stage
     [SerializeField] private Collider _target;
 
     private Rigidbody _rigidbody;
-    private float _moveSpeed = 0.1f;
-    private float _rotationSpeed = 0.9f;
-    private float _delay = 0.03f;
+    private float _moveSpeed = 0.04f;
+    private float _rotationSpeed = 0.8f;
+    private float _delay = 0.01f;
     private bool _isDragable = true;
     private float _maxLiftUp = 0.3f;
     private Quaternion _rotationAngle;
@@ -21,18 +21,13 @@ public class FirstStageItems : Stage
     {
         _rigidbody = GetComponent<Rigidbody>();
         StageNumber = 1;
-        _rotationAngle = new Quaternion(90, 90, 0, 0);
+        _rotationAngle = new Quaternion(90, 90, 90, 0);
     }
 
     private void OnValidate()
     {
         if(_target == null)
             throw new System.Exception($"Не назначен Target на объекте {gameObject}");
-    }
-
-    private Vector3 GetMouseWorldPosition()
-    {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     private void OnMouseDown()
