@@ -4,26 +4,29 @@ using UnityEngine;
 public class SecondStageItems : Stage
 {
     [SerializeField] private Transform _rightPlace;
-    [SerializeField] private float _moveSpeed = 4;
+    [SerializeField] private float _moveSpeed;
     
     private ItemInRightPosition _itemInRightPosition;
-    private float _rotationSpeed = 80;
-    private float _delay = 0.05f;
     private Coroutine _coroutine;
-    private bool isPositionRight => transform.position == _rightPlace.position && transform.rotation == _rightPlace.rotation;
+    private float _rotationSpeed = 60;
+    private float _delay = 0.01f;
+
+    private bool isPositionRight => (transform.position == _rightPlace.position) && (transform.rotation == _rightPlace.rotation);
 
     public override int StageNumber { get; protected set; }
+
+    private void OnValidate()
+    {
+        if(_rightPlace == null)
+            throw new System.Exception($"Не назначена верная позиция на объекте {gameObject}");
+        if(_moveSpeed <= 0)
+            _moveSpeed = 20;
+    }
 
     private void Awake()
     {        
         StageNumber = 2;
         _itemInRightPosition = GameObject.FindObjectOfType<ItemInRightPosition>();
-    }
-
-    private void OnValidate()
-    {
-      if(_rightPlace == null)
-            throw new System.Exception($"Не назначена верная позиция на объекте {gameObject}");
     }
 
     private void OnMouseDown()

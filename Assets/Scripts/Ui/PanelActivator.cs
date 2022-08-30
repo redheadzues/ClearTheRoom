@@ -10,8 +10,7 @@ public class PanelActivator : MonoBehaviour
         if (_stageFinisher == null)
             throw new System.Exception($"Не назначен StageFinisher на объекте {gameObject}");
         if(_stageCompletePanel == null)
-            if (_stageFinisher == null)
-                throw new System.Exception($"Не назначена панель завершения стадии на объекте {gameObject}");
+            throw new System.Exception($"Не назначена панель завершения стадии на объекте {gameObject}");
     }
 
     private void OnEnable()

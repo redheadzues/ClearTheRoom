@@ -10,6 +10,7 @@ public class StagePreparer : MonoBehaviour
     private Stage[] _stagesItems;
     private List<Stage> _currentStageItems;
     private int _currentStage;
+    private int _zero = 0;
 
     public event UnityAction StageStarted;
     public IReadOnlyList<Stage> CurrentItem => _currentStageItems;
@@ -29,7 +30,7 @@ public class StagePreparer : MonoBehaviour
 
     private void Start()
     {
-        _currentStage = 0;
+        _currentStage = _zero;
         StartNextStage();
     }
 

@@ -5,7 +5,6 @@ using UnityEngine;
 public class ThridStageItem : Stage
 {
     private float _delay = 0.5f;
-    private float _allowableClearValue = 0.9f;
     private Clearer _clearer;
     private Coroutine _coroutine;
     private float _half = 0.5f;
@@ -38,7 +37,7 @@ public class ThridStageItem : Stage
     {
         var waitingTime = new WaitForSeconds(_delay);
 
-        while(_clearer.TotalMaskPixels * _allowableClearValue> _clearer.TotalClearedPixels)
+        while(_clearer.TotalMaskPixels > _clearer.TotalClearedPixels)
         {
             yield return waitingTime;
         }

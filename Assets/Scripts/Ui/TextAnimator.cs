@@ -3,9 +3,10 @@ using UnityEngine;
 using TMPro;
 
 [RequireComponent(typeof(CharacterResizer))]
-[RequireComponent (typeof(TMP_Text))]
+[RequireComponent(typeof(TMP_Text))]
 public class TextAnimator : MonoBehaviour
 {
+    private const int _one = 1;
     private TMP_Text _text;
     private CharacterResizer _resizer;
     private Coroutine _coroutine;
@@ -36,12 +37,12 @@ public class TextAnimator : MonoBehaviour
         int totalVisibleCharacters = _text.textInfo.characterCount; 
         int counter = 0;
 
-        while (counter < totalVisibleCharacters+1)
+        while (counter < totalVisibleCharacters + _one)
         {
             _text.maxVisibleCharacters = counter;
-            _resizer.ResizeCharacter(counter - 1);
+            _resizer.ResizeCharacter(counter - _one);
 
-            counter += 1;
+            counter++;
 
             yield return waitingTime;
         }

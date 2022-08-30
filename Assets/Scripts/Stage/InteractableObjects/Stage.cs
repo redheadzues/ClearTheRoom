@@ -6,7 +6,7 @@ public abstract class Stage : MonoBehaviour
 {
     private Outline _outline;
 
-    public virtual event UnityAction TaskCompleted;
+    public event UnityAction TaskCompleted;
     public abstract int StageNumber { get; protected set; }
 
     private void Awake()

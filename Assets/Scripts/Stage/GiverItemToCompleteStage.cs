@@ -42,7 +42,6 @@ public class GiverItemToCompleteStage : MonoBehaviour
     {
         for (int i = 0; i < _requiredItems.Length; i++)
             _requiredItems[i].gameObject.SetActive(false);
-
     }
 
     private void ChangeRequiredItemsActiveStatus(bool isActive)

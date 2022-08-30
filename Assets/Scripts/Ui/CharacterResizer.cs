@@ -7,6 +7,7 @@ public class CharacterResizer : MonoBehaviour
     [SerializeField] private TMP_Text _text;
     [SerializeField] private float _startCharSize;
 
+    private Coroutine _coroutine;
     private const int _baseCharSize = 1;
     private float _stepChangeCharSize = 0.1f;
     private const int _countVerticesInChar = 4;
@@ -27,7 +28,10 @@ public class CharacterResizer : MonoBehaviour
 
     public void ResizeCharacter(int index)
     {
-        StartCoroutine(OnResizeCharacter(index));
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+
+        _coroutine = StartCoroutine(OnResizeCharacter(index));
     }
 
     private IEnumerator OnResizeCharacter(int index)

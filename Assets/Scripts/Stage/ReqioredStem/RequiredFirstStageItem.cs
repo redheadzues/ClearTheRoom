@@ -7,6 +7,8 @@ public class RequiredFirstStageItem : RequiredItemToCompleteStage
 
     private Animator _animator;
 
+    private int _hit = Animator.StringToHash("Hit");
+
     public override int StageNumber { get; protected set; }
 
     private void OnValidate()
@@ -29,6 +31,6 @@ public class RequiredFirstStageItem : RequiredItemToCompleteStage
     public void OnHit()
     {
         _dustParticle.Play();
-        _animator.SetTrigger("Hit");
+        _animator.SetTrigger(_hit);
     }
 }

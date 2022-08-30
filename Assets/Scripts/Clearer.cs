@@ -2,7 +2,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshCollider))]
 [RequireComponent (typeof(MeshRenderer))]
-
 public class Clearer : MonoBehaviour
 {
     [SerializeField] private int _circleSize;
@@ -13,9 +12,21 @@ public class Clearer : MonoBehaviour
     private Texture2D _maskTexture;
     private MeshCollider _collider;
     private MeshRenderer _renderer;
+    private float _distance = 100f;
+    private const int two = 2;
 
     public int TotalMaskPixels => _maskTextureResolution * _maskTextureResolution;
     public int TotalClearedPixels { get; private set; }
+
+    private void OnValidate()
+    {
+        if (_maskTextureResolution < 128)
+            _maskTextureResolution = 512;
+        if (_circleSize <= 0)
+            _circleSize = 80;
+        if (_mainTexture == null)
+            throw new System.Exception($"Нет основной текстуры на объекте {gameObject}");
+    }
 
     private void Start()
     {
@@ -40,23 +51,13 @@ public class Clearer : MonoBehaviour
         _maskTexture.Apply();
     }
 
-    private void OnValidate()
-    {
-        if (_maskTextureResolution < 128)
-            _maskTextureResolution = 512;
-        if (_circleSize <= 0)
-            _circleSize = 80;
-        if (_mainTexture == null)
-            throw new System.Exception($"Нет основной текстуры на объекте {gameObject}");
-    }
-
     private void Update()
     {
         if (_stageItem.gameObject.activeSelf == true)
         {
             RaycastHit hit;
 
-            if(_collider.Raycast(_stageItem.Ray, out hit, 100f))
+            if(_collider.Raycast(_stageItem.Ray, out hit, _distance))
             {
                 int rayPointX = (int)(hit.textureCoord.x * _maskTexture.width);
                 int rayPointY = (int)(hit.textureCoord.y * _maskTexture.height);
@@ -74,14 +75,14 @@ public class Clearer : MonoBehaviour
         {
             for (int x = 0; x < _circleSize; x++)
             {
-                float x2 = Mathf.Pow(x - _circleSize /2, 2);
-                float y2 = Mathf.Pow(y - _circleSize / 2, 2);
-                float r2 = Mathf.Pow(_circleSize /2, 2);
+                float sqrtX = Mathf.Pow(x - _circleSize /two, two);
+                float sqrtY = Mathf.Pow(y - _circleSize / two, two);
+                float sqrtR = Mathf.Pow(_circleSize /two, two);
 
-                if ((x2 + y2) < r2)
+                if ((sqrtX + sqrtY) < sqrtR)
                 {
-                    int settingPixelX = pointX + x - _circleSize / 2;
-                    int settingPixelY = pointY + y - _circleSize / 2;
+                    int settingPixelX = pointX + x - _circleSize / two;
+                    int settingPixelY = pointY + y - _circleSize / two;
                     if (_maskTexture.GetPixel(settingPixelX, settingPixelY) != Color.green)
                     {
                         _maskTexture.SetPixel(settingPixelX, settingPixelY, Color.green);
